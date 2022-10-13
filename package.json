@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "tsc",
-        "run": "nodemon index.js",
+        "run": "node index.js",
         "start": "yarn build && node index.js",
         "test": "jest"
     },
@@ -21,7 +21,9 @@
     "homepage": "https://github.com/JozianeNascimento/Pi_4semestre#readme",
     "dependencies": {
         "axios": "^1.1.2",
+        "dotenv-safe": "^8.2.0",
         "iodash": "^0.0.1-security",
+        "telegraf": "^4.10.0",
         "ts-node": "^10.9.1",
         "typescript": "^4.8.4"
     },
