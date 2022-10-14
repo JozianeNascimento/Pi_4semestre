@@ -8,10 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+//importando arquivo .env
 require('dotenv-safe').config();
+//importando o modulo telegraf
 const { Telegraf } = require('telegraf');
+//importando o modulo api_nominatim(api_geo)
 const api_geo = require("./api_nominatim");
+//importando o modulo express, é um framework
 const express = require("express");
+//Metodo para criar rotas, no local host
 const server = express();
 server.use(express.json());
 server.listen(3000);
