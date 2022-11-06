@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 // conectando ao banco, criando a base de dados chamado api_meu_local
-mongoose.connect("mongodb://localhost:27017/api_meu_local", {}, (error) => {
+mongoose.connect("mongodb://localhost:27017/apilocal", {}, (error) => {
     if (error) {
         console.log('Falha ao autenticar com mongodb');
         console.log(error);

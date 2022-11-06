@@ -12,12 +12,7 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: false,
-    },
-    password: {
-        type: String,
         required: true,
-        select: false,
     },
     dispositivo: {
         type: String,
@@ -36,6 +31,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    chatid1: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     telefone_contato: {
         type: String,
         required: true,
@@ -48,19 +48,18 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    chatid2: {
+        type: String,
+        required: true,
+        unique: true,
+    },
     criadoEm: {
         type: Date,
         default: Date.now,
     }
 });
 
-//antes de enviar o registo, será feito um pre-save para criptografar a senha
-UserSchema.pre("save", async function(next) {
-    const hash = await bcryptjs.hash(this.password, 10);
-    this.password = hash;
-})
-
 //construindo o modelo utilizando o schema UserSchema
-const User = mongoose.model("User", UserSchema);
+//const User = mongoose.model("User", UserSchema);
 
-module.exports = User;
+module.exports = mongoose.model("User", UserSchema);

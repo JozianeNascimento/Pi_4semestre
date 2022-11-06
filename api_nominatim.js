@@ -7,4 +7,3 @@ const api_geo = axios.create({
 });
 //criando o modulo api_geo
 module.exports = api_geo;
-// esse modulo é utilizado no index.ts

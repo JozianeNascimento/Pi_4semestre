@@ -1,6 +1,11 @@
 //importando arquivo .env
 require('dotenv-safe').config();
 
+const bodyParser = require('body-parser');
+
+//importando o usermodel
+const UserModel = require("./models/User");
+
 //importando o modulo telegraf
 const { Telegraf } = require('telegraf')
 
@@ -13,21 +18,40 @@ const express = require("express");
 //importando rota do controller
 const AuthController = require("./controllers/AuthController");
 
+//importando o modelo do usuário
+const User = require('./models/User');
+
 //Metodo para criar rotas, no local host
 const server = express();
 
 //parametros
+server.set('view engine', 'ejs');
+server.engine('ejs', require('ejs').__express);
 server.use(express.json());
+server.use(bodyParser.urlencoded({
+    extended: false
+}));
+server.use(bodyParser.json());
 
 //numero da porta 
-server.listen(3000);
+server.listen(5000);
 
 //testando se o servidor http://localhost:3000/ esta funcionando
 server.get("/", (req, res) => {
-    return res.send({ message: "no ar" });
+    res.render('index', { title: 'Home Page' });
 });
 
-//grupo de rota para cadastrato de usuario
+//rota da pagina sobre nós
+server.get("/about", (req, res) => {
+    res.render('about', { title: 'Sobre nós' });
+});
+
+//rota da pagina contatos
+server.get("/contact", (req, res) => {
+    res.render('contact', { title: 'Contate nos' });
+});
+
+//grupo de rota para cadastro de usuario
 server.use("/auth", AuthController);
 
 //criar rota localização com parametro ID(latitude e longitude) padrao lat=-22.3577&lon=-47.3849
