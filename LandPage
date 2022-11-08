@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" a href="css/style.css">
+  <title>Fale conosco</title>
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">
+      <img src="img/logo.png">
+    </div>
+      <div class="nome"><h1> Smart SOS</h1></div>
+      <div class="navlink">
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+    </div></div>
+  <form>
+    <label for="fname">Nome:</label><br>
+  <input type="text" id="fname" name="fname" value="John"><br>
+  <label for="lname">Sobrenome:</label><br>
+  <input type="text" id="lname" name="lname" value="Doe"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+<div class="rodape">
+  <h6>Nome: Joziane do Nascimento Tagliaferro - Email:  </h6>
+  <h6>Nome: Paula Masson Marangon - Email: paula.marangon01@fatec.sp.gov.br</h6>
+</div>
+
+  
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Smart SOS</title>
+</head>
+
+  
+   <div class="navbar">
+    <div class="logo">
+      <img src="img/logo.png">
+    </div>
+      <div class="nome"><h1> Smart SOS</h1></div>
+      <div class="navlink">
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+    </div></div>
+    <br><br>
+    <div> <img src="img/home.jpg "></div>
+    <div> 
+      <p>  Mussum Ipsum, cacilds vidis litro abertis. </p>
+    </div>
+    <div>
+      <h3> Título para chamar atenção</h3>
+     
+    </div>
+    <div class="conteudo"></div>
+    <div class="miolo">
+      <div class="card">
+        <strong> Facilidades no uso</strong>
+        <p>
+  Mussum Ipsum, cacilds vidis litro abertis. Detraxit consequat et quo num tendi nada.Atirei o pau no gatis, per gatis num morreus.Posuere libero varius
+        </p>
+      </div>
+      <div class="card">
+        <strong> Chame quem você confia se precisar</strong>
+        <p>
+  Mussum Ipsum, cacilds vidis litro abertis. Detraxit consequat et quo num tendi nada.Atirei o pau no gatis, per gatis num morreus.Posuere libero varius
+        </p>
+      </div>
+      
+      <div class="card">
+        <strong> Beneficios no uso do sistema</strong>
+        <p>
+  Mussum Ipsum, cacilds vidis litro abertis. Detraxit consequat et quo num tendi nada.Atirei o pau no gatis, per gatis num morreus.Posuere libero varius
+        </p>
+      </div>
+      <div class="card">
+        <strong> Depoimentos</strong>
+        <p>  Mussum Ipsum, cacilds vidis litro abertis. Detraxit consequat et quo num tendi nada.Atirei o pau no gatis, per gatis num morreus.Posuere libero varius</p>
+        <a href="form.html"><button>Fale conosco</button></a>
+       </div></div></div>
+      
+      <div class="rodape">
+        <h6>Nome: Joziane do Nascimento Tagliaferro - Email:  </h6>
+        <h6>Nome: Paula Masson Marangon - Email: paula.marangon01@fatec.sp.gov.br</h6>
+      </div>
+
+    
+    
+       
+      
+      
+  
+</body>
+</html>
