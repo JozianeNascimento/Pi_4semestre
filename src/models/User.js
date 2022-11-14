@@ -1,9 +1,6 @@
 //importando a conexão com o banco criado na /database/index.js
 const mongoose = require("../database");
 
-//importando modulo para criptografar a senha
-const bcryptjs = require("bcryptjs");
-
 //criando o padrao de cadastro para usuários
 const UserSchema = new mongoose.Schema({
     nome: {

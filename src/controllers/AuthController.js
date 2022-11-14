@@ -39,11 +39,6 @@ router.post('/new', (req, res) => {
     user.save((err) => {
         if (err) {
             res.json({ message: err.message, type: 'danger' });
-        } else {
-            req.session.message = {
-                type: "success",
-                message: "Usuário cadastrado!"
-            }
         }
         res.redirect("/");
     });

@@ -3,9 +3,6 @@ require('dotenv-safe').config();
 
 const bodyParser = require('body-parser');
 
-//importando o usermodel
-const UserModel = require("./models/User");
-
 //importando o modulo telegraf
 const { Telegraf } = require('telegraf')
 
@@ -18,11 +15,14 @@ const express = require("express");
 //importando rota do controller
 const AuthController = require("./controllers/AuthController");
 
-//importando o modelo do usuário
-const User = require('./models/User');
+//importando o modelo do log
+const Log = require('./models/Log');
 
 //Metodo para criar rotas, no local host
 const server = express();
+
+//base de cliente
+const User = require('./models/User');
 
 //parametros
 server.set('view engine', 'ejs');
@@ -34,10 +34,11 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 
 //numero da porta 
-server.listen(5000);
+server.listen(3000);
 
 //testando se o servidor http://localhost:3000/ esta funcionando
 server.get("/", (req, res) => {
+    User.find()
     res.render('index', { title: 'Home Page' });
 });
 
@@ -54,17 +55,22 @@ server.get("/contact", (req, res) => {
 //grupo de rota para cadastro de usuario
 server.use("/auth", AuthController);
 
-//criar rota localização com parametro ID(latitude e longitude) padrao lat=-22.3577&lon=-47.3849
+//criar rota localização com parametro ID(dispositivo, latitude e longitude) padrao lat=-22.3577&lon=-47.3849
 server.get("/localizacao/:id", async(req, res) => {
     //  exemplo id = lat=-22.3577&lon=-47.3849
 
     //armazenar os parametros digitados após localização/
     const { id } = req.params;
+    //dividindo os paramentros em numero do dispositivo e lat/lon
+    const device = id.substring(0, 4);
+    const aux = id.substring(4);
+
+
     try {
         //utilizando a api com reverse para realizar o geolocalização reversa.
-        const { data } = await api_geo.get(`reverse?format=json&${id}`); //lat=-22.3577&lon=-47.3849
+        const { data } = await api_geo.get(`reverse?format=json&${aux}`); //lat=-22.3577&lon=-47.3849
 
-        //criado somente para validar se data esta vazio e receber as informações de localização
+        //ciado variaveis para receber as informações da api de geolocalização.
         var dados = data;
         var lat;
         var lon;
@@ -86,16 +92,35 @@ server.get("/localizacao/:id", async(req, res) => {
             lon = lon.replace('"', "");
             dados = dados.replace('"', "");
 
-            //utilizado para enviar mensagem(convertido em string) no telegram pelo bot e chat_id 
+            const users = "users";
+            var query = { dispositivo: device }; // variavel para receber a condição do dispositivo enviado por api
+            //utilizado o find para buscar as info do cadastro de usuário
+            User.find(query).exec((erro, resultado) => {
+                if (erro) throw erro;
+                //variavel criada para armazenar o nome do usuário
+                var name = resultado[0].nome;
+                // instaciado um novo objeto do tipo log para receber as variaveis definidas
+                const log = new Log({
+                    nome: name,
+                    dispositivo: device,
+                    latitude: lat,
+                    longitude: lon,
+                });
+                //salvar no mongodb
+                log.save();
+                //variavel que recebe o chatid dos contatos do cliente para enviar as mensagens com a localização
+                var chatid = resultado[0].chatid1;
+                //utilizado para enviar mensagem(convertido em string) no telegram pelo bot e chat_id 
+                bot.telegram.sendMessage(chatid, "\u{1F6A8}\u{1F6A8} ALERTA \u{1F6A8}\u{1F6A8} Encaminhando localização: " + dados);
+                // \u{1F6A8}\u{1F6A8} codigo de emotion https://apps.timwhitlock.info/emoji/tables/unicode
+                //enviado os dado do mapa, posibilitando abrir pelo app google maps
+                bot.telegram.sendLocation(chatid, lat, lon); //usado 3 parametros para a função chat id, lat e lon
 
-            bot.telegram.sendMessage(process.env.CHAT_ID, "\u{1F616}\u{1F6A8} ALERTA \u{1F6A8}\u{1F6A8} Encaminhando localização: " + dados);
-            // \u{1F6A8}\u{1F6A8} codigo de emotion https://apps.timwhitlock.info/emoji/tables/unicode
-            //enviado os dado do mapa, posibilitando abrir pelo app google maps
-            bot.telegram.sendLocation(process.env.CHAT_ID, lat, lon); //usado 3 parametros para a função chat id, lat e lon
+            });
         }
-        return res.send("localização enviada com sucesso");
+        return res.send("localização enviada com sucesso - mensagem teste");
     } catch (error) {
-        res.send({ error: error.message })
+        res.send({ error: error.message });
     }
 
-})
+});
