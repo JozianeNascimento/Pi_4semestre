@@ -38,8 +38,16 @@ server.listen(3000);
 
 //testando se o servidor http://localhost:3000/ esta funcionando
 server.get("/", (req, res) => {
-    User.find()
-    res.render('index', { title: 'Home Page' });
+    User.find().exec((err, users) => {
+        if (err) {
+            res.json({ message: err.message });
+        } else {
+            res.render('index', {
+                title: 'Home Page',
+                users: users,
+            });
+        }
+    });
 });
 
 //rota da pagina sobre nós
@@ -48,23 +56,30 @@ server.get("/about", (req, res) => {
 });
 
 //rota da pagina contatos
-server.get("/contact", (req, res) => {
-    res.render('contact', { title: 'Contate nos' });
+server.get("/log", (req, res) => {
+    Log.find().exec((err, log) => {
+        if (err) {
+            res.json({ message: err.message });
+        } else {
+            res.render('log', {
+                title: 'Relatório',
+                log: log,
+            });
+        }
+    });
 });
 
-//grupo de rota para cadastro de usuario
+
+//grupo de rota para cadastro/alteração e exclusão de usuario
 server.use("/auth", AuthController);
 
 //criar rota localização com parametro ID(dispositivo, latitude e longitude) padrao lat=-22.3577&lon=-47.3849
 server.get("/localizacao/:id", async(req, res) => {
-    //  exemplo id = lat=-22.3577&lon=-47.3849
-
     //armazenar os parametros digitados após localização/
     const { id } = req.params;
     //dividindo os paramentros em numero do dispositivo e lat/lon
     const device = id.substring(0, 4);
     const aux = id.substring(4);
-
 
     try {
         //utilizando a api com reverse para realizar o geolocalização reversa.
