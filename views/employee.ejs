@@ -1,0 +1,36 @@
+<%- include('layout/header') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto mt-4">
+                <div class="card shadow">
+                    <div class="card-header bg-success">
+                        <h3 class="text-light">Novo funcionário</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="../auth/employee" method="post">
+                            <div class="mb-3">
+                                <label for="nome">Nome</label>
+                                <input type="text" name="nome" class="form-control form-control-lg" placeholder="Digite o nome" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">E-mail</label>
+                                <input type="text" name="email" class="form-control form-control-lg" placeholder="Digite o email" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password">Senha</label>
+                                <input type="password" name="password" class="form-control form-control-lg" placeholder="Digite a senha" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmapassword">Confirmar senha</label>
+                                <input type="password" name="confirmapassword" class="form-control form-control-lg" placeholder="Confirme a senha" required/>
+                            </div>
+                            <div class="mb-3 d-grid">
+                                <input type="submit" name="submit" value="Salvar" class="btn btn-dark btn-lg" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('layout/footer') %>

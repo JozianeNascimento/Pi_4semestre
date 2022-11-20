@@ -21,8 +21,20 @@ const Log = require('./models/Log');
 //Metodo para criar rotas, no local host
 const server = express();
 
+//importando o empregado
+const Employee = require("./models/Employee");
+
 //base de cliente
 const User = require('./models/User');
+
+// utilizado para criar o token
+const jwt = require('jsonwebtoken');
+
+//utilizado para armazenar o tolken
+const cookieparser = require('cookie-parser');
+
+//utilizado para validar se o token existe
+const checkToken = require('./config/JWT')
 
 //parametros
 server.set('view engine', 'ejs');
@@ -32,12 +44,13 @@ server.use(bodyParser.urlencoded({
     extended: false
 }));
 server.use(bodyParser.json());
+server.use(cookieparser());
 
 //numero da porta 
 server.listen(3000);
 
 //testando se o servidor http://localhost:3000/ esta funcionando
-server.get("/", (req, res) => {
+server.get("/", checkToken, (req, res) => {
     User.find().exec((err, users) => {
         if (err) {
             res.json({ message: err.message });
@@ -50,13 +63,27 @@ server.get("/", (req, res) => {
     });
 });
 
+//rota privada
+server.get("/employee/:id", checkToken, async(req, res) => {
+    const id = req.params.id;
+
+    const employee = await Employee.findById(id, '-password');
+
+    if (!employee) {
+        return res.status(404).json({ msg: 'Usuário não encontrado.' });
+    }
+
+    res.status(200).json({ employee });
+
+});
+
 //rota da pagina sobre nós
 server.get("/about", (req, res) => {
     res.render('about', { title: 'Sobre nós' });
 });
 
 //rota da pagina contatos
-server.get("/log", (req, res) => {
+server.get("/log", checkToken, (req, res) => {
     Log.find().exec((err, log) => {
         if (err) {
             res.json({ message: err.message });

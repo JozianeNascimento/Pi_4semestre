@@ -1,12 +1,18 @@
+require('dotenv-safe').config();
 //importar o express para criar rota
 const express = require("express");
 
 //necessário para ler conteudo do body
 const bodyParser = require('body-parser');
 
-//necessário para gerar senha
+//necessário para criptografar senha
 const bcrypt = require('bcrypt');
+
+// utilizado para criar o token
 const jwt = require('jsonwebtoken');
+
+//utilizado para armazenar o tolken
+const cookieparser = require('cookie-parser');
 
 //importando o user
 const User = require("../models/User");
@@ -17,17 +23,25 @@ const Employee = require("../models/Employee");
 // para poder criar rotas
 const router = express.Router();
 
+//utilizado para validar se o token existe
+const checkToken = require('../config/JWT')
+
 //ler conteudo do body
 router.use(bodyParser.urlencoded({
     extended: false
 }));
 router.use(bodyParser.json());
 
+
 // registro de funcionarios
+router.get('/employee', checkToken, (req, res) => {
+    res.render('employee', { title: 'Registro novo funcinário' });
+});
+
 router.post('/employee', async(req, res) => {
     const { nome, email, password, confirmapassword } = req.body;
 
-    if (password !== confirmapassword) {
+    if (password != confirmapassword) {
         return res.status(422).json({ msg: 'As senhas não conferem' });
     }
 
@@ -44,7 +58,7 @@ router.post('/employee', async(req, res) => {
     try {
         await employee.save();
 
-        res.status(201).json({ msg: 'Criado com sucesso!' })
+        res.redirect("/auth/login");
     } catch (error) {
         res.status(500).json({ msg: 'Erro no servidor' });
     }
@@ -52,8 +66,15 @@ router.post('/employee', async(req, res) => {
 });
 
 //Login do funcionario
+
+router.get('/login', (req, res) => {
+    res.render('login', { title: 'Login' });
+});
+
 router.post('/login', async(req, res) => {
     const { email, password } = req.body;
+
+    const employee = await Employee.findOne({ email: email });
 
     if (!employee) {
         return res.status(404).json({ msg: 'Funcionário não encontrado!' });
@@ -74,7 +95,10 @@ router.post('/login', async(req, res) => {
             },
             secret,
         );
-        res.status(200).json({ msg: 'Autenticação com sucesso', token });
+
+        res.cookie("access-token", token);
+        console.log(token);
+        res.redirect("/");
 
     } catch (err) {
         console.log(error);
@@ -84,9 +108,8 @@ router.post('/login', async(req, res) => {
 
 });
 
-
 //rota para criar novo cliente
-router.get('/new', (req, res) => {
+router.get('/new', checkToken, (req, res) => {
     res.render('new', { title: 'Novo Cadastro' });
 });
 
@@ -116,7 +139,7 @@ router.post('/new', (req, res) => {
 
 
 //rota para atualizar cliente
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', checkToken, (req, res) => {
     let id = req.params.id;
     User.findById(id, (err, user) => {
         if (err) {
@@ -152,7 +175,7 @@ router.post('/update/:id', (req, res) => {
 });
 
 //Excluir cliente
-router.get("/delete/:id", (req, res) => {
+router.get("/delete/:id", checkToken, (req, res) => {
     let id = req.params.id;
     User.findByIdAndDelete(id, (err, result) => {
         if (err) {
@@ -161,6 +184,11 @@ router.get("/delete/:id", (req, res) => {
             res.redirect("/");
         }
     });
+});
+
+router.get('/logout', (req, res) => {
+    res.cookie("access-token", " ", { maxAge: 1 });
+    res.redirect('/auth/login');
 });
 
 module.exports = router;
