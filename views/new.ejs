@@ -1,0 +1,64 @@
+<%- include('layout/header') %>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto mt-4">
+                <div class="card shadow">
+                    <div class="card-header bg-dark">
+                        <h3 class="text-light">Novo cliente</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="../auth/new" method="post">
+                            <div class="mb-3">
+                                <label for="nome">Nome</label>
+                                <input type="text" name="nome" class="form-control form-control-lg" placeholder="Digite o nome" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email">E-mail</label>
+                                <input type="text" name="email" class="form-control form-control-lg" placeholder="Digite o email" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="dispositivo">ID Dispositivo</label>
+                                <input type="text" name="dispositivo" class="form-control form-control-lg" placeholder="Digite o id do dispositivo com 4 digitos" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="endereco">Endereço</label>
+                                <input type="text" name="endereco" class="form-control form-control-lg" placeholder="Digite o endereço" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefone">Telefone</label>
+                                <input type="text" name="telefone" class="form-control form-control-lg" placeholder="Digite o telefone" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nome_contato">Nome primeiro contato</label>
+                                <input type="text" name="nome_contato" class="form-control form-control-lg" placeholder="Digite o nome do primeiro contato" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefone_contato">Telefone contato</label>
+                                <input type="text" name="telefone_contato" class="form-control form-control-lg" placeholder="Digite o telefone contato do primeiro contato" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="chatid1">Chat ID</label>
+                                <input type="text" name="chatid1" class="form-control form-control-lg" placeholder="Digite o chat id" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nome_contato2">Nome segundo contato</label>
+                                <input type="text" name="nome_contato2" class="form-control form-control-lg" placeholder="Digite o nome do segundo contato" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefone_contato2">Telefone contato</label>
+                                <input type="text" name="telefone_contato2" class="form-control form-control-lg" placeholder="Digite o telefone contato do segundo contato" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="chatid2">Chat ID</label>
+                                <input type="text" name="chatid2" class="form-control form-control-lg" placeholder="Digite o chat id" required/>
+                            </div>
+                            <div class="mb-3 d-grid">
+                                <input type="submit" name="submit" value="Salvar" class="btn btn-dark btn-lg" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('layout/footer') %>

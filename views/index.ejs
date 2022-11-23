@@ -1,0 +1,49 @@
+<%- include('layout/header') %>
+    <div class="conteiner">
+        <h2>Clientes</h2>
+        <div class="row my-4">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped text-center">
+                        <thead>
+                            <tr class="table-dark">
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
+                                <th>Primeiro Contato</th>
+                                <th>Segundo Contato</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach((row, index)=> { %>
+                                <tr class="align-middle">
+                                    <td>
+                                        <%= row.nome %>
+                                    </td>
+                                    <td>
+                                        <%= row.email %>
+                                    </td>
+                                    <td>
+                                        <%= row.telefone %>
+                                    </td>
+                                    <td>
+                                        <%= row.nome_contato %>
+                                    </td>
+                                    <td>
+                                        <%= row.nome_contato2 %>
+                                    </td>
+                                    <td>
+                                        <a href="../auth/edit/<%= row._id %> " class="text-success"><i class="fas fa-edit fa-lg mx-1"></i></a>
+                                        <a href="../auth/delete/<%= row._id %>" class="text-danger"><i class="fas fa-trash fa-lg mx-1"></i></a>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('layout/footer') %>
