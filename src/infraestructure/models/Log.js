@@ -1,5 +1,5 @@
 //importando a conexão com o banco criado na /database/index.js
-const mongoose = require("../database");
+const mongoose = require("../../interfaces/database/mongoose");
 
 //criando o padrao de registro de log
 const logSchema = new mongoose.Schema({

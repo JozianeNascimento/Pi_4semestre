@@ -1,5 +1,5 @@
 //importando a conexão com o banco criado na /database/index.js
-const mongoose = require("../database");
+const mongoose = require("../../interfaces/database/mongoose");
 
 //criando o padrao de cadastro para usuários
 const UserSchema = new mongoose.Schema({
@@ -31,7 +31,6 @@ const UserSchema = new mongoose.Schema({
     chatid1: {
         type: String,
         required: true,
-        unique: true,
     },
     telefone_contato: {
         type: String,
@@ -48,7 +47,6 @@ const UserSchema = new mongoose.Schema({
     chatid2: {
         type: String,
         required: true,
-        unique: true,
     },
     criadoEm: {
         type: Date,
