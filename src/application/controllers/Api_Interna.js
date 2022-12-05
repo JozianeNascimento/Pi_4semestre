@@ -84,7 +84,9 @@ server.get("/localizacao/:id", async(req, res) => {
                 // \u{1F6A8}\u{1F6A8} codigo de emotion https://apps.timwhitlock.info/emoji/tables/unicode
                 //enviado os dado do mapa, posibilitando abrir pelo app google maps
                 bot.telegram.sendLocation(chatid, lat, lon); //usado 3 parametros para a função chat id, lat e lon
-
+                var chatid2 = resultado[0].chatid2;
+                bot.telegram.sendMessage(chatid2, "\u{1F6A8}\u{1F6A8} ALERTA \u{1F6A8}\u{1F6A8} Encaminhando localização: " + dados);
+                bot.telegram.sendLocation(chatid2, lat, lon);
             });
         }
         return res.send("localização enviada com sucesso - mensagem teste");
