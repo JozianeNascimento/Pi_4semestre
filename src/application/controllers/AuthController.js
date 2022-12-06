@@ -15,10 +15,10 @@ const jwt = require('jsonwebtoken');
 const cookieparser = require('cookie-parser');
 
 //importando o user
-const User = require("../models/User");
+const User = require("../../infraestructure/models/User");
 
 //importando o empregado
-const Employee = require("../models/Employee");
+const Employee = require("../../infraestructure/models/Employee");
 
 // para poder criar rotas
 const router = express.Router();
@@ -98,7 +98,7 @@ router.post('/login', async(req, res) => {
 
         res.cookie("access-token", token);
         console.log(token);
-        res.redirect("/");
+        res.redirect("/system/home");
 
     } catch (err) {
         console.log(error);
@@ -132,7 +132,7 @@ router.post('/new', (req, res) => {
         if (err) {
             res.json({ message: err.message, type: 'danger' });
         }
-        res.redirect("/");
+        res.redirect("/system/home");
     });
 
 });
@@ -143,7 +143,7 @@ router.get('/edit/:id', checkToken, (req, res) => {
     let id = req.params.id;
     User.findById(id, (err, user) => {
         if (err) {
-            res.redirect("/");
+            res.redirect("/system/home");
         } else {
             res.render('edit_user', { title: 'Atualizar cadastro', user: user });
         }
@@ -168,7 +168,7 @@ router.post('/update/:id', (req, res) => {
         if (err) {
             res.json({ message: err.message, type: 'danger' });
         } else {
-            res.redirect("/");
+            res.redirect("/system/home");
         }
 
     });
@@ -181,11 +181,12 @@ router.get("/delete/:id", checkToken, (req, res) => {
         if (err) {
             res.json({ message: err.message, type: 'danger' });
         } else {
-            res.redirect("/");
+            res.redirect("/system/home");
         }
     });
 });
 
+//sair do login
 router.get('/logout', (req, res) => {
     res.cookie("access-token", " ", { maxAge: 1 });
     res.redirect('/auth/login');
