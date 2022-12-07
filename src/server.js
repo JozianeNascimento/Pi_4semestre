@@ -31,9 +31,6 @@ server.use(bodyParser.urlencoded({
 server.use(bodyParser.json());
 server.use(cookieparser());
 
-//numero da porta 
-server.listen(3000);
-
 //grupo de rota para cadastro/alteração e exclusão de usuario
 server.use("/auth", AuthController);
 
@@ -42,3 +39,10 @@ server.use("/api", Api);
 
 //grupo de rota para o sistema
 server.use("/system", System);
+
+//tela default
+server.get('/', (req, res) => {
+    res.send({ message: 'Bem vindo' });
+});
+
+module.exports = server;
